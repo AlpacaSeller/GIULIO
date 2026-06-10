@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3eee3;
+  --color-paper-deep: #e9e2d2;
+  --color-ink: #161412;
+  --color-terra: #c8451f;
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-terra);
+  color: var(--color-paper);
+}
+
+/* Grana fotografica sottile su tutta la pagina */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.font-serif-it {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* Titolo enorme della hero */
+.mega {
+  font-size: clamp(4rem, 17vw, 15rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Striscia scorrevole */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 0;
+}
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  white-space: nowrap;
+  animation: scroll 28s linear infinite;
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* Riga dell'indice viaggi: la foto appare al passaggio */
+.index-row .row-img {
+  opacity: 0;
+  transform: rotate(-4deg) scale(0.92);
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.index-row:hover .row-img,
+.index-row:focus-visible .row-img {
+  opacity: 1;
+  transform: rotate(-2deg) scale(1);
+}
+.index-row:hover .row-title {
+  -webkit-text-stroke: 1.5px var(--color-ink);
+  color: transparent;
+}
+
+/* Entrata morbida */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    animation: fadeUp 0.8s ease-out both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Galleria a colonne (masonry semplice) */
+.masonry {
+  columns: 1;
+  column-gap: 1rem;
+}
+@media (min-width: 640px) {
+  .masonry { columns: 2; }
+}
+@media (min-width: 1024px) {
+  .masonry { columns: 3; }
+}
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
