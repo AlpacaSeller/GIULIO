@@ -1,25 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
-import { site, marqueeWords } from "@/lib/content";
+import { site, marqueeExtras } from "@/lib/content";
 import { getShoots } from "@/lib/data";
 
 // I contenuti possono cambiare dall'admin: rigenera la pagina ogni 60s
 export const revalidate = 60;
 
-function Marquee() {
-  const items = [...marqueeWords, ...marqueeWords];
+function Marquee({ shoots }) {
+  // Destinazioni reali (cliccabili) alternate alle parole decorative
+  const items = [];
+  shoots.forEach((s, i) => {
+    items.push({ label: s.titolo, href: `/viaggi/${s.slug}` });
+    items.push({ label: marqueeExtras[i % marqueeExtras.length] });
+  });
+  const doppio = [...items, ...items];
   return (
-    <div className="marquee border-y-2 border-ink py-3" aria-hidden="true">
+    <div className="marquee border-y-2 border-ink py-3">
       {[0, 1].map((t) => (
-        <div key={t} className="marquee-track">
-          {items.map((w, i) => (
-            <span
-              key={`${t}-${i}`}
-              className="px-6 text-sm font-semibold uppercase tracking-[0.2em]"
-            >
-              {w} <span className="text-terra">✳</span>
-            </span>
-          ))}
+        <div key={t} className="marquee-track" aria-hidden={t === 1}>
+          {doppio.map((w, i) =>
+            w.href ? (
+              <Link
+                key={`${t}-${i}`}
+                href={w.href}
+                className="px-6 text-sm font-semibold uppercase tracking-[0.2em] underline-offset-4 transition hover:text-terra hover:underline"
+              >
+                {w.label} <span className="text-terra">✳</span>
+              </Link>
+            ) : (
+              <span
+                key={`${t}-${i}`}
+                className="px-6 text-sm font-semibold uppercase tracking-[0.2em] text-ink/60"
+              >
+                {w.label} <span className="text-terra">✳</span>
+              </span>
+            )
+          )}
         </div>
       ))}
     </div>
@@ -53,7 +69,7 @@ export default async function Home() {
         </p>
       </section>
 
-      <Marquee />
+      <Marquee shoots={shoots} />
 
       {/* INDICE VIAGGI */}
       <section id="viaggi" className="scroll-mt-10 px-5 py-14 sm:px-8 sm:py-20">
