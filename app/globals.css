@@ -44,7 +44,7 @@ body {
 
 /* Titolo enorme della hero */
 .mega {
-  font-size: clamp(4rem, 17vw, 15rem);
+  font-size: clamp(3rem, 15vw, 14rem);
   line-height: 0.85;
   letter-spacing: -0.04em;
   font-weight: 800;
@@ -99,6 +99,29 @@ body {
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reveal on scroll (components/Reveal.js) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal:not(.revealed) { opacity: 0; }
+}
+
+/* Feedback al tocco (telefono): le righe e i bottoni "rispondono" */
+@media (hover: none) {
+  .tap-feedback:active {
+    background: var(--color-paper-deep);
+    transform: scale(0.992);
   }
 }
 

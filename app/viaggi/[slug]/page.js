@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Reveal from "@/components/Reveal";
 import { site } from "@/lib/content";
 import { shoots as shootsStatici } from "@/lib/shoots";
 import { getShoots, getShoot } from "@/lib/data";
@@ -68,20 +69,23 @@ export default async function ShootPage({ params }) {
       <section className="px-5 py-10 sm:px-8 sm:py-14">
         <div className="masonry">
           {shoot.foto.map((f, i) => (
-            <figure key={f.src} className="group relative overflow-hidden">
-              <Image
-                src={f.src}
-                alt={`${shoot.titolo} — scatto ${i + 1}`}
-                width={f.w}
-                height={f.h}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="h-auto w-full transition duration-500 group-hover:scale-[1.02]"
-                loading={i < 3 ? "eager" : "lazy"}
-              />
-              <figcaption className="font-serif-it absolute bottom-2 right-3 text-sm text-paper opacity-0 transition group-hover:opacity-100">
-                {shoot.titolo} · {String(i + 1).padStart(2, "0")}
-              </figcaption>
-            </figure>
+            <Reveal key={f.src} delay={(i % 3) * 70}>
+              <figure className="group relative overflow-hidden">
+                <Image
+                  src={f.src}
+                  alt={`${shoot.titolo} — scatto ${i + 1}`}
+                  width={f.w}
+                  height={f.h}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="h-auto w-full transition duration-500 group-hover:scale-[1.02]"
+                  loading={i < 3 ? "eager" : "lazy"}
+                />
+                {/* Didascalia: sempre visibile su telefono, in hover su desktop */}
+                <figcaption className="font-serif-it absolute bottom-2 right-3 text-sm text-paper [text-shadow:0_1px_4px_rgba(0,0,0,0.5)] md:opacity-0 md:transition md:group-hover:opacity-100">
+                  {shoot.titolo} · {String(i + 1).padStart(2, "0")}
+                </figcaption>
+              </figure>
+            </Reveal>
           ))}
         </div>
       </section>

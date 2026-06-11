@@ -2,6 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { site, marqueeExtras } from "@/lib/content";
 import { getShoots } from "@/lib/data";
+import Reveal from "@/components/Reveal";
+
+// Asterisco SVG: sempre terracotta, su ogni dispositivo
+// (il carattere ✳ su telefono diventa un'emoji verde)
+function Star() {
+  return (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 12 12"
+      className="-mt-0.5 inline text-terra"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M6 1v10M1.7 3.5l8.6 5M10.3 3.5l-8.6 5" />
+    </svg>
+  );
+}
 
 // I contenuti possono cambiare dall'admin: rigenera la pagina ogni 60s
 export const revalidate = 60;
@@ -25,14 +46,14 @@ function Marquee({ shoots }) {
                 href={w.href}
                 className="px-6 text-sm font-semibold uppercase tracking-[0.2em] underline-offset-4 transition hover:text-terra hover:underline"
               >
-                {w.label} <span className="text-terra">✳</span>
+                {w.label} <Star />
               </Link>
             ) : (
               <span
                 key={`${t}-${i}`}
                 className="px-6 text-sm font-semibold uppercase tracking-[0.2em] text-ink/60"
               >
-                {w.label} <span className="text-terra">✳</span>
+                {w.label} <Star />
               </span>
             )
           )}
@@ -87,7 +108,7 @@ export default async function Home() {
             <Link
               key={s.slug}
               href={`/viaggi/${s.slug}`}
-              className="index-row group relative flex items-baseline gap-4 border-b-2 border-ink py-6 transition-colors sm:gap-8 sm:py-8"
+              className="index-row tap-feedback group relative flex items-baseline gap-4 border-b-2 border-ink py-6 transition sm:gap-8 sm:py-8"
             >
               <span className="font-serif-it w-10 shrink-0 text-terra sm:w-14 sm:text-lg">
                 {String(i + 1).padStart(2, "0")}
