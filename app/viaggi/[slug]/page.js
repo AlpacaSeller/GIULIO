@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
+import Wordmark from "@/components/Wordmark";
 import { site } from "@/lib/content";
 import { shoots as shootsStatici } from "@/lib/shoots";
 import { getShoots, getShoot } from "@/lib/data";
@@ -37,15 +38,10 @@ export default async function ShootPage({ params }) {
   return (
     <main>
       <header className="flex items-center justify-between px-5 py-5 sm:px-8">
-        <Link
-          href="/"
-          className="text-sm font-bold uppercase tracking-[0.25em] hover:text-terra"
-        >
-          {site.nome} {site.cognome}
-        </Link>
+        <Wordmark />
         <Link
           href="/#viaggi"
-          className="text-sm font-semibold uppercase tracking-wider hover:text-terra"
+          className="text-xs font-semibold uppercase tracking-wider hover:text-terra sm:text-sm"
         >
           ← Tutti i viaggi
         </Link>

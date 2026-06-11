@@ -44,7 +44,8 @@ body {
 
 /* Titolo enorme della hero */
 .mega {
-  font-size: clamp(3rem, 15vw, 14rem);
+  /* 11.5vw: "LORENZO" in Syne riempie lo schermo senza mai tagliarsi */
+  font-size: clamp(2.6rem, 11.5vw, 13rem);
   line-height: 0.85;
   letter-spacing: -0.04em;
   font-weight: 800;

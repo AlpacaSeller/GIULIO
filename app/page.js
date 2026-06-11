@@ -3,6 +3,7 @@ import Link from "next/link";
 import { site, marqueeExtras } from "@/lib/content";
 import { getShoots } from "@/lib/data";
 import Reveal from "@/components/Reveal";
+import Wordmark from "@/components/Wordmark";
 
 // Asterisco SVG: sempre terracotta, su ogni dispositivo
 // (il carattere ✳ su telefono diventa un'emoji verde)
@@ -69,10 +70,8 @@ export default async function Home() {
     <main>
       {/* HEADER */}
       <header className="flex items-center justify-between px-5 py-5 sm:px-8">
-        <span className="text-sm font-bold uppercase tracking-[0.25em]">
-          {site.nome} {site.cognome}
-        </span>
-        <nav className="flex gap-5 text-sm font-semibold uppercase tracking-wider">
+        <Wordmark />
+        <nav className="flex gap-4 text-xs font-semibold uppercase tracking-wider sm:gap-5 sm:text-sm">
           <a href="#viaggi" className="hover:text-terra">Viaggi</a>
           <a href="#chi" className="hover:text-terra">Chi sono</a>
           <a href="#contatti" className="hover:text-terra">Contatti</a>
